@@ -65,6 +65,20 @@ class Main extends React.Component {
 			},
 		]
 		this.popularBooks = this.booksMaster.filter((book) => book.popular === true)
+		// sort by title
+		this.popularBooks.sort((a, b) => {
+		  const titleA = a.title.toUpperCase(); // ignore upper and lowercase
+		  const titleB = b.title.toUpperCase(); // ignore upper and lowercase
+		  if (titleA < titleB) {
+			return -1;
+		  }
+		  if (titleA > titleB) {
+			return 1;
+		  }
+		
+		  // names must be equal
+		  return 0;
+		});
 		this.onChange = this.onChange.bind(this)
 	}
 
