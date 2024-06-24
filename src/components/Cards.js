@@ -4,13 +4,30 @@ import Card from './Card.js'
 class Cards extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {books: this.props.books}
+        this.state = {books: []}
+    }
+
+    componentDidMount() {
+        this.setState({
+            books: this.props.books
+        })
+    }
+    
+    componentDidUpdate(prevProps) {
+        if (prevProps.books !== this.props.books) {
+            this.setState({
+                books: this.props.books
+            })
+        }
     }
 
     bookCards = (books) => {
-        return books.map((book) => {
-            return <Card book = {book} />
-        })
+        if (books !== null) {
+            return books.map((book) => {
+                return <Card book = {book} key={book.title}/>
+            })
+        }
+        else return <></>
     }
 
     render() {
