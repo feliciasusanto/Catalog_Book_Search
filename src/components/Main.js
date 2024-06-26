@@ -9,7 +9,7 @@ class Main extends React.Component {
 			search: '',
 			searchBy: '',
 			year: 1900,
-			searchResult: []
+			searchResult: null,
 		}
 		this.booksMaster = [
 			{
@@ -101,16 +101,65 @@ class Main extends React.Component {
 						searchResult: null,
 					},
 					() => {
-						// search by title
-						if (this.state.search !== '' && this.state.searchBy === 'title') {
+						if (this.state.search !== '') {
+							// search by title
+							if (
+								this.state.searchBy === 'title') {
+								this.setState({
+									searchResult: this.booksMaster.filter(
+										(book) =>
+											book.title
+												.toLowerCase()
+												.includes(this.state.search.toLowerCase()) === true
+									),
+								})
+								// search by author
+							} else if (
+								this.state.searchBy === 'author'
+							) {
+								this.setState({
+									searchResult: this.booksMaster.filter(
+										(book) =>
+											book.author
+												.toLowerCase()
+												.includes(this.state.search.toLowerCase()) === true
+									),
+								})
+								// search by publisher
+							} else if (
+								this.state.searchBy === 'publisher'
+							) {
+								this.setState({
+									searchResult: this.booksMaster.filter(
+										(book) =>
+											book.publisher
+												.toLowerCase()
+												.includes(this.state.search.toLowerCase()) === true
+									),
+								})
+							}
+							// search by title and year
+						} else if (
+							this.state.searchBy === 'year'
+						) {
 							this.setState({
 								searchResult: this.booksMaster.filter(
 									(book) =>
 										book.title
 											.toLowerCase()
-											.includes(this.state.search.toLowerCase()) === true
+											.includes(this.state.search.toLowerCase()) === true &&
+										String(book.year).includes(this.state.year)
 								),
 							})
+						} else {
+							// search by year (search bar empty)
+							if (this.state.searchBy === 'year') {
+								this.setState({
+									searchResult: this.booksMaster.filter((book) =>
+										String(book.year).includes(this.state.year)
+									),
+								})
+							}
 						}
 					}
 				)
@@ -129,7 +178,8 @@ class Main extends React.Component {
 		return (
 			<main className='container '>
 				<SearchForm onChange={this.onChange} />
-				{this.state.search !== '' ? (
+				{this.state.search !== '' ||
+				(this.state.search === '' && this.state.searchBy === 'year') ? (
 					<>
 						<div className='books-list'>
 							<div className='row my-3'>

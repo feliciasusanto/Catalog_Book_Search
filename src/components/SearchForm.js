@@ -95,7 +95,7 @@ class SearchForm extends React.Component {
 							<div className='col' style={{ display: 'inline-block' }}>
 								<input
 									type='number'
-									name='yearInput'
+									name='year'
 									id='year'
 									minLength={4}
 									min={1900}
