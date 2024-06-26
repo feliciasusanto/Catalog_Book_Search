@@ -10,72 +10,7 @@ class Main extends React.Component {
 			searchBy: '',
 			year: 1900,
 			searchResult: null,
-			booksMaster: [
-				{
-					title: 'Classical Mythology',
-					author: 'Mark P. O. Morford',
-					publisher: 'Oxford University Press',
-					year: 2022,
-					popular: false,
-					bookmark: false,
-				},
-				{
-					title: 'Rules of The Wild',
-					author: 'Francesca Marciano',
-					publisher: 'Random House Inc',
-					year: 1998,
-					popular: true,
-					bookmark: false,
-				},
-				{
-					title: 'Clara Callan',
-					author: 'Richard Bruce Wright',
-					publisher: 'Harper Flamingo Canada',
-					year: 2001,
-					popular: false,
-					bookmark: false,
-				},
-				{
-					title: 'Wild Animus',
-					author: 'Rich Shapero',
-					publisher: 'Too Far',
-					year: 2004,
-					popular: true,
-					bookmark: false,
-				},
-				{
-					title: 'Tage der Unschuld',
-					author: 'Richard North Patterson',
-					publisher: 'Goldmann',
-					year: 2000,
-					popular: false,
-					bookmark: false,
-				},
-				{
-					title: 'The Hellfire Club',
-					author: 'Peter Straub',
-					publisher: 'Random House Inc',
-					year: 1996,
-					popular: false,
-					bookmark: false,
-				},
-				{
-					title: 'The Night Listener',
-					author: 'Armistead Maupin',
-					publisher: 'Harper Colins Publishers',
-					year: 2000,
-					popular: true,
-					bookmark: false,
-				},
-				{
-					title: 'Night Tales',
-					author: 'Nora Roberts',
-					publisher: 'Silhouette',
-					year: 2000,
-					popular: false,
-					bookmark: false,
-				},
-			],
+			booksMaster: [],
 			popularBooks: [],
 			bookmark: false,
 		}
@@ -114,6 +49,8 @@ class Main extends React.Component {
 		)
 		let booksMasterList = [...this.state.booksMaster]
 		booksMasterList[findBookIndex] = bookmarkBook
+		// update books master in local storage
+		localStorage.setItem('booksMaster', JSON.stringify(booksMasterList))
 		this.setState(
 			{
 				booksMaster: booksMasterList,
@@ -199,10 +136,12 @@ class Main extends React.Component {
 	}
 
 	componentDidMount() {
-		this.getPopularBooks()
 		this.setState({
 			searchBy: 'title',
 			searchResult: [],
+			booksMaster: JSON.parse(localStorage.getItem('booksMaster'))
+		}, () => {
+			this.getPopularBooks()
 		})
 	}
 
