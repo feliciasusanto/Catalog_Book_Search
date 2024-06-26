@@ -28,14 +28,14 @@ class Card extends React.Component {
 							}),
 							() => {
 								this.props.bookmarkBook(this.state.bookmarkBook)
-                                this.setState({
-                                    book: this.state.bookmarkBook
-                                })
+								this.setState({
+									book: this.state.bookmarkBook,
+								})
 							}
 						)
 					}
 				)
-			},
+			}
 		)
 	}
 
@@ -54,6 +54,7 @@ class Card extends React.Component {
 	}
 
 	render() {
+		let path = window.location.pathname
 		return (
 			<>
 				<div className='card m-2 col-4 p-0' style={{ width: '32%' }}>
@@ -64,25 +65,29 @@ class Card extends React.Component {
 							{this.state.book.publisher} {this.state.book.year}
 						</p>
 					</div>
-					<div
-						className='bookmark text-end m-0 px-2'
-						style={{ background: 'lightgrey' }}>
-						{this.state.book.bookmark === false ? (
-							<img
-								src='https://img.icons8.com/?size=100&id=KY8KFlMXWpIG&format=png&color=000000'
-								alt='bookmark'
-								onClick={this.onClickBookmark}
-								style={{ width: '10%' }}
-							/>
-						) : (
-							<img
-								src='https://img.icons8.com/?size=100&id=sbP8MaAzMcPh&format=png&color=000000'
-								alt='bookmark'
-								onClick={this.onClickBookmark}
-								style={{ width: '10%' }}
-							/>
-						)}
-					</div>
+					{path === '/' ? (
+						<div
+							className='bookmark text-end m-0 px-2'
+							style={{ background: 'lightgrey' }}>
+							{this.state.book.bookmark === false ? (
+								<img
+									src='https://img.icons8.com/?size=100&id=KY8KFlMXWpIG&format=png&color=000000'
+									alt='bookmark'
+									onClick={this.onClickBookmark}
+									style={{ width: '10%' }}
+								/>
+							) : (
+								<img
+									src='https://img.icons8.com/?size=100&id=sbP8MaAzMcPh&format=png&color=000000'
+									alt='bookmark'
+									onClick={this.onClickBookmark}
+									style={{ width: '10%' }}
+								/>
+							)}
+						</div>
+					) : (
+						<></>
+					)}
 				</div>
 			</>
 		)

@@ -11,21 +11,29 @@ class SearchForm extends React.Component {
 		const target = event.target
 		const inputName = target.name
 		const value = target.value
-		this.setState({
-			[inputName]: value,
-		}, () => {
-			this.props.onChange(
-				this.state.search,
-				this.state.searchBy,
-				this.state.year
-			)
-        })
+		this.setState(
+			{
+				[inputName]: value,
+			},
+			() => {
+				this.props.onChange(
+					this.state.search,
+					this.state.searchBy,
+					this.state.year
+				)
+			}
+		)
 	}
 
 	componentDidMount() {
-		this.setState({
-			searchBy: 'title',
-		})
+		this.setState(
+			{
+				searchBy: 'title',
+			},
+			() => {
+				console.log(this.state.searchBy)
+			}
+		)
 	}
 
 	render() {
