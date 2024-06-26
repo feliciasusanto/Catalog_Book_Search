@@ -10,68 +10,85 @@ class Main extends React.Component {
 			searchBy: '',
 			year: 1900,
 			searchResult: null,
+			booksMaster: [
+				{
+					title: 'Classical Mythology',
+					author: 'Mark P. O. Morford',
+					publisher: 'Oxford University Press',
+					year: 2022,
+					popular: false,
+					bookmark: false,
+				},
+				{
+					title: 'Rules of The Wild',
+					author: 'Francesca Marciano',
+					publisher: 'Random House Inc',
+					year: 1998,
+					popular: true,
+					bookmark: false,
+				},
+				{
+					title: 'Clara Callan',
+					author: 'Richard Bruce Wright',
+					publisher: 'Harper Flamingo Canada',
+					year: 2001,
+					popular: false,
+					bookmark: false,
+				},
+				{
+					title: 'Wild Animus',
+					author: 'Rich Shapero',
+					publisher: 'Too Far',
+					year: 2004,
+					popular: true,
+					bookmark: false,
+				},
+				{
+					title: 'Tage der Unschuld',
+					author: 'Richard North Patterson',
+					publisher: 'Goldmann',
+					year: 2000,
+					popular: false,
+					bookmark: false,
+				},
+				{
+					title: 'The Hellfire Club',
+					author: 'Peter Straub',
+					publisher: 'Random House Inc',
+					year: 1996,
+					popular: false,
+					bookmark: false,
+				},
+				{
+					title: 'The Night Listener',
+					author: 'Armistead Maupin',
+					publisher: 'Harper Colins Publishers',
+					year: 2000,
+					popular: true,
+					bookmark: false,
+				},
+				{
+					title: 'Night Tales',
+					author: 'Nora Roberts',
+					publisher: 'Silhouette',
+					year: 2000,
+					popular: false,
+					bookmark: false,
+				},
+			],
+			popularBooks: [],
+			bookmark: false,
 		}
-		this.booksMaster = [
-			{
-				title: 'Classical Mythology',
-				author: 'Mark P. O. Morford',
-				publisher: 'Oxford University Press',
-				year: 2022,
-				popular: false,
-			},
-			{
-				title: 'Rules of The Wild',
-				author: 'Francesca Marciano',
-				publisher: 'Random House Inc',
-				year: 1998,
-				popular: true,
-			},
-			{
-				title: 'Clara Callan',
-				author: 'Richard Bruce Wright',
-				publisher: 'Harper Flamingo Canada',
-				year: 2001,
-				popular: false,
-			},
-			{
-				title: 'Wild Animus',
-				author: 'Rich Shapero',
-				publisher: 'Too Far',
-				year: 2004,
-				popular: true,
-			},
-			{
-				title: 'Tage der Unschuld',
-				author: 'Richard North Patterson',
-				publisher: 'Goldmann',
-				year: 2000,
-				popular: false,
-			},
-			{
-				title: 'The Hellfire Club',
-				author: 'Peter Straub',
-				publisher: 'Random House Inc',
-				year: 1996,
-				popular: false,
-			},
-			{
-				title: 'The Night Listener',
-				author: 'Armistead Maupin',
-				publisher: 'Harper Colins Publishers',
-				year: 2000,
-				popular: true,
-			},
-			{
-				title: 'Night Tales',
-				author: 'Nora Roberts',
-				publisher: 'Silhouette',
-				year: 2000,
-				popular: false,
-			},
-		]
-		this.popularBooks = this.booksMaster.filter((book) => book.popular === true)
+
+		this.onChange = this.onChange.bind(this)
+	}
+
+	getPopularBooks = () => {
+		let popBooks = this.state.booksMaster.filter(
+			(book) => book.popular === true
+		)
 		// sort by title
-		this.popularBooks.sort((a, b) => {
+		popBooks.sort((a, b) => {
 			const titleA = a.title.toUpperCase() // ignore upper and lowercase
 			const titleB = b.title.toUpperCase() // ignore upper and lowercase
 			if (titleA < titleB) {
@@ -84,7 +101,28 @@ class Main extends React.Component {
 			// names must be equal
 			return 0
 		})
-		this.onChange = this.onChange.bind(this)
+
+		this.setState({
+			popularBooks: popBooks,
+		})
+	}
+
+	bookmarkBook = (bookmarkBook) => {
+		// change bookmark value in master
+		let findBookIndex = this.state.booksMaster.findIndex(
+			(book) => book.title.toLowerCase() === bookmarkBook.title.toLowerCase()
+		)
+		let booksMasterList = [...this.state.booksMaster]
+		booksMasterList[findBookIndex] = bookmarkBook
+		this.setState(
+			{
+				booksMaster: booksMasterList,
+			},
+			() => {
+				// update list of popular books with new bookmark
+				this.getPopularBooks()
+			}
+		)
 	}
 
 	onChange = (search, searchBy, year) => {
@@ -103,10 +141,9 @@ class Main extends React.Component {
 					() => {
 						if (this.state.search !== '') {
 							// search by title
-							if (
-								this.state.searchBy === 'title') {
+							if (this.state.searchBy === 'title') {
 								this.setState({
-									searchResult: this.booksMaster.filter(
+									searchResult: this.state.booksMaster.filter(
 										(book) =>
 											book.title
 												.toLowerCase()
@@ -114,11 +151,9 @@ class Main extends React.Component {
 									),
 								})
 								// search by author
-							} else if (
-								this.state.searchBy === 'author'
-							) {
+							} else if (this.state.searchBy === 'author') {
 								this.setState({
-									searchResult: this.booksMaster.filter(
+									searchResult: this.state.booksMaster.filter(
 										(book) =>
 											book.author
 												.toLowerCase()
@@ -126,11 +161,9 @@ class Main extends React.Component {
 									),
 								})
 								// search by publisher
-							} else if (
-								this.state.searchBy === 'publisher'
-							) {
+							} else if (this.state.searchBy === 'publisher') {
 								this.setState({
-									searchResult: this.booksMaster.filter(
+									searchResult: this.state.booksMaster.filter(
 										(book) =>
 											book.publisher
 												.toLowerCase()
@@ -139,11 +172,9 @@ class Main extends React.Component {
 								})
 							}
 							// search by title and year
-						} else if (
-							this.state.searchBy === 'year'
-						) {
+						} else if (this.state.searchBy === 'year') {
 							this.setState({
-								searchResult: this.booksMaster.filter(
+								searchResult: this.state.booksMaster.filter(
 									(book) =>
 										book.title
 											.toLowerCase()
@@ -155,7 +186,7 @@ class Main extends React.Component {
 							// search by year (search bar empty)
 							if (this.state.searchBy === 'year') {
 								this.setState({
-									searchResult: this.booksMaster.filter((book) =>
+									searchResult: this.state.booksMaster.filter((book) =>
 										String(book.year).includes(this.state.year)
 									),
 								})
@@ -168,6 +199,7 @@ class Main extends React.Component {
 	}
 
 	componentDidMount() {
+		this.getPopularBooks()
 		this.setState({
 			searchBy: 'title',
 			searchResult: [],
@@ -187,7 +219,10 @@ class Main extends React.Component {
 								<hr></hr>
 							</div>
 							<div className='row'>
-								<Cards books={this.state.searchResult} />
+								<Cards
+									books={this.state.searchResult}
+									bookmarkBook={this.bookmarkBook}
+								/>
 							</div>
 						</div>
 					</>
@@ -199,7 +234,10 @@ class Main extends React.Component {
 								<hr></hr>
 							</div>
 							<div className='row'>
-								<Cards books={this.popularBooks} />
+								<Cards
+									books={this.state.popularBooks}
+									bookmarkBook={this.bookmarkBook}
+								/>
 							</div>
 						</div>
 						<div className='books-list'>
@@ -208,7 +246,10 @@ class Main extends React.Component {
 								<hr></hr>
 							</div>
 							<div className='row'>
-								<Cards books={this.booksMaster} />
+								<Cards
+									books={this.state.booksMaster}
+									bookmarkBook={this.bookmarkBook}
+								/>
 							</div>
 						</div>
 					</>
