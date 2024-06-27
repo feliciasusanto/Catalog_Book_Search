@@ -4,7 +4,8 @@ import Main from './components/Main.js'
 import Bookmark from './components/Bookmark.js'
 
 function App() {
-	let path = window.location.pathname
+	let path = window.location.href.split('/')
+	path = `/${path[path.length - 1]}`
 	return (
 		<>
 			<div className='App d-flex'>

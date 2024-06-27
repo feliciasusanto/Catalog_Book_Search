@@ -12,6 +12,8 @@
 /build
 
 # misc
+# env should be excluded but this commit is only for a note
+# .env
 .DS_Store
 .env.local
 .env.development.local

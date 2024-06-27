@@ -1,5 +1,7 @@
 function SideNav() {
-	let path = window.location.pathname
+	let path = window.location.href.split('/')
+	path = `/${path[path.length - 1]}`
+	let pubURL = `${process.env.PUBLIC_URL}/#`
 	return (
 		<div
 			className='d-flex flex-nowrap'
@@ -17,7 +19,7 @@ function SideNav() {
 				<ul className='nav nav-pills nav-flush flex-column mb-auto text-center'>
 					<li className='nav-item'>
 						<a
-							href='/'
+							href={pubURL + '/'}
 							className={
 								path === '/'
 									? 'nav-link py-3 border-bottom active'
@@ -51,7 +53,7 @@ function SideNav() {
 					</li>
 					<li className='nav-item'>
 						<a
-							href='/bookmark'
+							href={pubURL + '/bookmark'}
 							className={
 								path === '/bookmark'
 									? 'nav-link py-3 border-bottom active'
@@ -66,16 +68,16 @@ function SideNav() {
 								viewBox='0 0 24 24'
 								fill='none'
 								xmlns='http://www.w3.org/2000/svg'>
-								<g id='SVGRepo_bgCarrier' stroke-width='0'></g>
+								<g id='SVGRepo_bgCarrier' strokeWidth='0'></g>
 								<g
 									id='SVGRepo_tracerCarrier'
-									stroke-linecap='round'
-									stroke-linejoin='round'></g>
+									strokeLinecap='round'
+									strokeLinejoin='round'></g>
 								<g id='SVGRepo_iconCarrier'>
 									{' '}
 									<path
-										fill-rule={path === '/bookmark' ? 'oddeven' : 'evenodd'}
-										clip-rule={path === '/bookmark' ? 'oddeven' : 'evenodd'}
+										fillRule={path === '/bookmark' ? 'oddeven' : 'evenodd'}
+										clipRule={path === '/bookmark' ? 'oddeven' : 'evenodd'}
 										d='M19 1H8.99C7.89 1 7 1.9 7 3H17C18.1 3 19 3.9 19 5V18L21 19V3C21 1.9 20.1 1 19 1ZM15 7V19.97L10 17.82L5 19.97V7H15ZM5 5H15C16.1 5 17 5.9 17 7V23L10 20L3 23V7C3 5.9 3.9 5 5 5Z'
 										fill={path === '/bookmark' ? '#ffffff' : '#165a72'}></path>
 								</g>

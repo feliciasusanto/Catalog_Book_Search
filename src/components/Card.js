@@ -54,7 +54,8 @@ class Card extends React.Component {
 	}
 
 	render() {
-		let path = window.location.pathname
+		let path = window.location.href.split('/')
+		path = `/${path[path.length - 1]}`
 		return (
 			<>
 				<div className='card m-2 col-4 p-0' style={{ width: '32%' }}>

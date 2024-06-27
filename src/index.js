@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { createHashRouter, RouterProvider } from 'react-router-dom'
 import App from './App'
 
 let booksMaster = [
@@ -77,12 +77,18 @@ if (
 	localStorage.setItem('booksMaster', JSON.stringify(booksMaster))
 }
 
+const router = createHashRouter([
+	{
+		children: [
+			{ path: '/', element: <App />, index: true },
+			{ path: '/bookmark', element: <App /> },
+		],
+	},
+])
+
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-	<BrowserRouter>
-		<Routes>
-			<Route path='/' index element={<App />} />
-			<Route path='/bookmark' index element={<App />} />
-		</Routes>
-	</BrowserRouter>
+	<React.StrictMode>
+		<RouterProvider router={router} />
+	</React.StrictMode>
 )
