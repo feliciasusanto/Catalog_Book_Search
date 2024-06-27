@@ -8,6 +8,8 @@ function SideNav() {
 				minHeight: '100vh',
 				overflowX: 'auto',
 				overflowY: 'hidden',
+				position: 'sticky',
+				top: '0',
 			}}>
 			<div
 				className='d-flex flex-column flex-shrink-0'
