@@ -26,14 +26,9 @@ class SearchForm extends React.Component {
 	}
 
 	componentDidMount() {
-		this.setState(
-			{
-				searchBy: 'title',
-			},
-			() => {
-				console.log(this.state.searchBy)
-			}
-		)
+		this.setState({
+			searchBy: 'title',
+		})
 	}
 
 	render() {
