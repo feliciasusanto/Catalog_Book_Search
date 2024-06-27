@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "https://feliciasusanto.github.io/Catalog_Book_Search/static/js/main.e1b46c3b.js",
+    "main.js": "https://feliciasusanto.github.io/Catalog_Book_Search/static/js/main.37985d94.js",
     "index.html": "https://feliciasusanto.github.io/Catalog_Book_Search/index.html",
-    "main.e1b46c3b.js.map": "https://feliciasusanto.github.io/Catalog_Book_Search/static/js/main.e1b46c3b.js.map"
+    "main.37985d94.js.map": "https://feliciasusanto.github.io/Catalog_Book_Search/static/js/main.37985d94.js.map"
   },
   "entrypoints": [
-    "static/js/main.e1b46c3b.js"
+    "static/js/main.37985d94.js"
   ]
 }
