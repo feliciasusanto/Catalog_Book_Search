@@ -1,18 +1,37 @@
 import { useEffect, useState } from 'react'
 import Cards from './Cards.js'
 
-function Bookmark() {
-	const [bookmarksList, setBookmarksList] = useState([])
-
-	useEffect(() => {
-		let booksMaster = JSON.parse(localStorage.getItem('booksMaster'))
-		let bookmarked = booksMaster.filter((book) => book.bookmark === true)
-		setBookmarksList(bookmarked)
-	}, [])
-
+function Bookmark(props) {
+	let booksMaster = JSON.parse(localStorage.getItem('booksMaster'))
 	let pubURL = `${process.env.PUBLIC_URL}/#`
 
-	return (		
+	const [bookmarksList, setBookmarksList] = useState([])
+
+	const getBookmarked = () => {
+		let bookmarked = booksMaster.filter((book) => book.bookmark === true)
+		setBookmarksList(bookmarked)
+	}
+
+	const bookmarkBook = (bookmarkBook) => {
+		// change bookmark value in master
+		let findBookIndex = booksMaster.findIndex(
+			(book) => book.title.toLowerCase() === bookmarkBook.title.toLowerCase()
+		)
+		let newBooksMasterList = [...booksMaster]
+		newBooksMasterList[findBookIndex] = bookmarkBook
+		// update books master in local storage
+		localStorage.setItem('booksMaster', JSON.stringify(newBooksMasterList))
+		getBookmarked()
+	}
+
+	// component did mount => load bookmarked books
+	// component did update => when remove a book from bookmark, then update state, then load bookmarked books again
+	useEffect(() => {
+		getBookmarked()
+	}, [getBookmarked])
+	
+
+	return (
 		<main className='container'>
 			{bookmarksList.length > 0 ? (
 				<>
@@ -22,7 +41,7 @@ function Bookmark() {
 							<hr></hr>
 						</div>
 						<div className='row'>
-							<Cards books={bookmarksList} bookmarkBook={{}} />
+							<Cards books={bookmarksList} bookmarkBook={bookmarkBook} />
 						</div>
 					</div>
 				</>
