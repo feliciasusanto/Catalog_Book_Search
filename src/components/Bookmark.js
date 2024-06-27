@@ -10,7 +10,9 @@ function Bookmark() {
 		setBookmarksList(bookmarked)
 	}, [])
 
-	return (
+	let pubURL = `${process.env.PUBLIC_URL}/#`
+
+	return (		
 		<main className='container'>
 			{bookmarksList.length > 0 ? (
 				<>
@@ -28,7 +30,7 @@ function Bookmark() {
 				<>
 					<hr />
 					<p className='h3'>No bookmarked book. Go and add one!</p>
-					<a href='/' className='btn btn-outline-primary'>
+					<a href={pubURL + '/'} className='btn btn-outline-primary'>
 						Click Me!
 					</a>
 				</>
